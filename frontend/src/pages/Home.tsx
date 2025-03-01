@@ -1,4 +1,4 @@
-import Threads from "../components/DiscussionList"
+import DiscussionList from "../components/DiscussionList"
 import Sidebar from "./Sidebar"
 
 const Home = () => {
@@ -6,7 +6,7 @@ const Home = () => {
     <>
       <div className="flex">
         <Sidebar/>
-        <Threads/>
+        <DiscussionList/>
       </div>
     </>
   )

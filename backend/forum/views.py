@@ -78,7 +78,26 @@ def view_discussion_thread(request, thread_id):
 @permission_classes([AllowAny])
 def list_all_discussion_threads(request):
     try:
-        threads = DiscussionThread.objects.all().values()
-        return JsonResponse(list(threads), safe=False, status=200)
+        threads = DiscussionThread.objects.select_related("author__author").all()
+
+        thread_list = [
+            {
+                "id": thread.id,
+                "title": thread.title,
+                "description": thread.description,
+                "category": thread.category,
+                "upvotes": thread.upvotes,
+                "author": {
+                    "username": thread.author.username,
+                    "bio": thread.author.author.bio if thread.author.author else None,
+                    "role": thread.author.author.role if thread.author.author else None
+                } if hasattr(thread.author, "author") else None,
+                "created_at": thread.created_at,
+                "updated_at": thread.updated_at
+            }
+            for thread in threads
+        ]
+
+        return JsonResponse(thread_list, safe=False, status=200)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
