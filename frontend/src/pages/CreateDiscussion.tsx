@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-const CreateThread = () => {
+const CreateDiscussion = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -72,4 +72,4 @@ const CreateThread = () => {
   );
 };
 
-export default CreateThread;
+export default CreateDiscussion;

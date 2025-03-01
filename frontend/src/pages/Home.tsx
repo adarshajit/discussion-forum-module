@@ -1,4 +1,4 @@
-import Threads from "../components/Threads"
+import Threads from "../components/DiscussionList"
 import Sidebar from "./Sidebar"
 
 const Home = () => {
