@@ -38,8 +38,10 @@ const CreateDiscussion = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="fieldset w-md bg-base-200 border border-base-300 p-4 rounded-box">
+    <div className="flex flex-col justify-center items-center h-screen gap-3">
+      <h1 className="text-4xl font-bold">Start a Discussion!</h1>
+      <p className="text-xl font-semibold text-gray-500">Have something on your mind? Create a thread and spark a conversation!</p>
+      <form onSubmit={handleSubmit} className="fieldset w-6xl bg-base-200 border border-base-300 p-4 mt-10 rounded-box">
         <label className="fieldset-label">Title</label>
         <input
           type="text"
@@ -60,7 +62,7 @@ const CreateDiscussion = () => {
         
         <label className="fieldset-label">Description</label>
         <textarea
-          className="textarea w-full"
+          className="textarea w-full h-90"
           placeholder="Elaborate your discussion here.."
           value={description}
           onChange={(e) => setDescription(e.target.value)}

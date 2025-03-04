@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
 import CreateComments from './CreateComments';
-import Comments from './Comments';
+import CommentsList from './CommentsList';
 
 interface Thread {
 	id: number;
 	title: string;
 	description: string;
 	category: string;
-	author: string;
+	author: any;
 	upvotes: number;
 	created_at: string;
 	updated_at: string;
@@ -51,21 +51,22 @@ const DiscussionDetails = () => {
 
 	return (
 		<div className='py-16 px-32 flex flex-col gap-3'>
-			<h1 className='text-4xl font-semibold'>{thread.title}</h1>
-			<Link to='/' className='text-violet-600'>
-				Back to Home Feed
-			</Link>
+			<h1 className='text-4xl font-bold'>{thread.title}</h1>
+				<p>Category: {thread.category.toUpperCase()}</p>
+				<Link to='/' className='text-violet-600'>
+					Back to Home Feed
+				</Link>
 
 			<div className='flex gap-8 pt-10 w-full'>
 				<img
 					className='size-16 rounded-box'
 					src='https://img.daisyui.com/images/profile/demo/1@94.webp'
-					alt={thread.author}
+					alt={thread.author.username}
 				/>
 				<div className='flex flex-col'>
 					<div className='flex flex-col gap-2 font-bold'>
-						<span className='text-lg'>{thread.author}</span>
-						<span className='text-sm text-gray-500'>
+						<span className='text-xl'>{thread.author.username}</span>
+						<span className='text-md text-gray-500'>
 							Posted on {new Date(thread.created_at).toLocaleDateString()}
 						</span>
 					</div>
@@ -96,7 +97,7 @@ const DiscussionDetails = () => {
 			</div>
 
       <CreateComments thread={thread}/>
-      <Comments comments={thread.comments}/>
+      <CommentsList comments={thread.comments}/>
 		</div>
 	);
 };

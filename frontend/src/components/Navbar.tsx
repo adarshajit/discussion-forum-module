@@ -18,7 +18,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <Link to='/' className="btn btn-ghost text-xl">daisyUI</Link>
+        <Link to='/' className="btn btn-ghost text-xl">URMS Discussions</Link>
       </div>
       <div className="navbar-end gap-2">
         <Link to="/thread/create">

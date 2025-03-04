@@ -3,7 +3,7 @@
 const Sidebar = () => {
   return (
     <>
-      <ul className="w-1/3 h-screen bg-amber-200">
+      <ul className="w-1/4 h-screen">
         <li>test</li>
         <li>test</li>
         <li>test</li>
