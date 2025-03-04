@@ -37,7 +37,7 @@ def create_discussion_comment(request, thread_id):
         description = data.get("description")
         if not description:
             return JsonResponse({"error": "Description is required"}, status=400)
-        author = request.user
+        author = User.objects.get(username="test_user")
         discussion = DiscussionThread.objects.get(id=thread_id)
         comment = DiscussionComment.objects.create(
             description=description,
@@ -55,25 +55,42 @@ def create_discussion_comment(request, thread_id):
 @permission_classes([AllowAny])
 def view_discussion_thread(request, thread_id):
     try:
-        thread = DiscussionThread.objects.get(id=thread_id)
-        comments = DiscussionComment.objects.filter(discussion=thread).values()
+        thread = DiscussionThread.objects.select_related('author__author').get(id=thread_id)
+        comments = DiscussionComment.objects.select_related('author__author').filter(discussion=thread)
+        
+        comments_data = [{
+            "id": comment.id,
+            "description": comment.description,
+            "author": {
+                "username": comment.author.username,
+                "bio": comment.author.author.bio if hasattr(comment.author, "author") else None,
+                "role": comment.author.author.role if hasattr(comment.author, "author") else None
+            },
+            "created_at": comment.created_at,
+            "updated_at": comment.updated_at
+        } for comment in comments]
+
         thread_data = {
             "id": thread.id,
             "title": thread.title,
             "description": thread.description,
             "category": thread.category,
             "upvotes": thread.upvotes,
-            "author": thread.author.username,
+            "author": {
+                "username": thread.author.username,
+                "bio": thread.author.author.bio if hasattr(thread.author, "author") else None,
+                "role": thread.author.author.role if hasattr(thread.author, "author") else None
+            },
             "created_at": thread.created_at,
             "updated_at": thread.updated_at,
-            "comments": list(comments)
+            "comments": comments_data
         }
         return JsonResponse(thread_data, status=200)
     except DiscussionThread.DoesNotExist:
         return JsonResponse({"error": "Discussion thread not found"}, status=404)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
-
+    
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def list_all_discussion_threads(request):
