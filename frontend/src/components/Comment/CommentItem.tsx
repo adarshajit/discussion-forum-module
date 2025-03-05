@@ -1,5 +1,6 @@
+import { Comment } from "../../types"
 
-const CommentItem = ({comment}) => {
+const CommentItem = ({comment}: {comment: Comment}) => {
   return (
     <li className="flex flex-col p-6 w-full max-w-xl min-w-xl min-h-20">
       <div className="flex py-4">

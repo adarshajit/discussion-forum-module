@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { ThreadDetails } from "../../types";
+import commentApi from "../../api/comment";
 
-const CreateComments = ({thread}) => {
-	const [description, setDescription] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+const CreateComments = ({thread}: {thread: ThreadDetails}) => {
+	const [description, setDescription] = useState<string>('');
+  const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
 	const {id, author } = thread;
 
@@ -12,19 +14,8 @@ const CreateComments = ({thread}) => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`https://discussion-forum-module.onrender.com/forum/thread/${id}/comment/create`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ description }),
-      });
-
-      if (response.ok) {
-        setDescription('');
-      } else {
-        console.error('Failed to post comment');
-      }
+      const response = await commentApi.createComment(id, description);
+      console.log(response);
     } catch (error) {
       console.error('Error posting comment:', error);
     } finally {

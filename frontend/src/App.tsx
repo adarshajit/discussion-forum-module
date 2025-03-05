@@ -1,9 +1,9 @@
 import { Routes, Route } from "react-router";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import CreateDiscussion from "./pages/CreateDiscussion";
+import DiscussionCreation from "./pages/DiscussionCreation";
 import AppLayout from "./layouts/AppLayout";
-import DiscussionDetails from "./components/Discussion/DiscussionDetails";
+import DiscussionDetails from "./pages/DiscussionDetails";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route element={<AppLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/thread/create" element={<CreateDiscussion />} />
+          <Route path="/thread/create" element={<DiscussionCreation />} />
           <Route path="/thread/:id" element={<DiscussionDetails />} />
         </Route>
       </Routes>

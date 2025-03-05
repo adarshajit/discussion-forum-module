@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
-const CreateDiscussion = () => {
+const DiscussionCreation = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [description, setDescription] = useState("");
@@ -74,4 +74,4 @@ const CreateDiscussion = () => {
   );
 };
 
-export default CreateDiscussion;
+export default DiscussionCreation;

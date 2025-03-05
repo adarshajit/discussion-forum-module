@@ -1,11 +1,12 @@
+import { Comment } from "../../types"
 import CommentItem from "./CommentItem"
 
-const CommentsList = ({comments}) => {
+const CommentsList = ({comments}: {comments: Comment[]}) => {
   return (
     <>
       <p className="mt-10 text-lg font-bold">{comments.length} Comments</p>
       <ul className="list bg-base-100 rounded-box shadow-md">
-      {comments.map((comment) => (
+      {comments.map((comment: Comment) => (
           <div className="w-full">
             <CommentItem key={comment.id} comment={comment} />
           </div>

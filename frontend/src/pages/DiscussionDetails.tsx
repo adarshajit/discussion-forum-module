@@ -1,34 +1,21 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
-import CreateComments from '../CreateComments';
-import CommentsList from '../Comment/CommentsList';
+import { ThreadDetails } from '../types';
 
-interface Thread {
-	id: number;
-	title: string;
-	description: string;
-	category: string;
-	author: any;
-	upvotes: number;
-	created_at: string;
-	updated_at: string;
-	comments: any[];
-}
+import CreateComments from '../components/Comment/CreateComments';
+import CommentsList from '../components/Comment/CommentsList';
+import discussionApi from '../api/discussion';
 
 const DiscussionDetails = () => {
 	const { id } = useParams();
-	const [thread, setThread] = useState<Thread | null>(null);
-	const [loading, setLoading] = useState(true);
+	const [thread, setThread] = useState<ThreadDetails | null>(null);
+	const [loading, setLoading] = useState<boolean>(true);
 	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchThreadDetails = async () => {
 			try {
-				const response = await fetch(`https://discussion-forum-module.onrender.com/forum/thread/${id}`);
-				if (!response.ok) {
-					throw new Error('Thread not found');
-				}
-				const data = await response.json();
+				const data = await discussionApi.getThreadDetails(id)
 				setThread(data);
 			} catch (err) {
 				setError(
