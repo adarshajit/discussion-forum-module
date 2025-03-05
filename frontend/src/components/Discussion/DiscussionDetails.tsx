@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router';
-import CreateComments from './CreateComments';
-import CommentsList from './CommentsList';
+import CreateComments from '../CreateComments';
+import CommentsList from '../Comment/CommentsList';
 
 interface Thread {
 	id: number;

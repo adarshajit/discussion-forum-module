@@ -1,5 +1,5 @@
 import { Link } from "react-router"
-import { truncateString } from "../utils/truncateString"
+import { truncateString } from "../../utils/truncateString"
 
 const DiscussionItem = ({thread}) => {
   return (

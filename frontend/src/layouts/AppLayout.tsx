@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
 import Navbar from "./Navbar";
 
-const MainLayout = () => {
+const AppLayout = () => {
   return (
     <>
       <Navbar />
@@ -10,4 +10,4 @@ const MainLayout = () => {
   );
 };
 
-export default MainLayout;
+export default AppLayout;

@@ -1,5 +1,5 @@
-import DiscussionList from "../components/DiscussionList"
-import Sidebar from "./Sidebar"
+import DiscussionList from "../components/Discussion/DiscussionList"
+import Sidebar from "../layouts/Sidebar"
 
 const Home = () => {
   return (
