@@ -12,7 +12,7 @@ const CreateComments = ({thread}) => {
 
     setIsSubmitting(true);
     try {
-      const response = await fetch(`http://localhost:8000/forum/thread/${id}/comment/create`, {
+      const response = await fetch(`https://discussion-forum-module.onrender.com/forum/thread/${id}/comment/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

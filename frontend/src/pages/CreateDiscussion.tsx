@@ -18,7 +18,7 @@ const CreateDiscussion = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:8000/forum/thread/create", {
+      const response = await fetch("https://discussion-forum-module.onrender.com/forum/thread/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

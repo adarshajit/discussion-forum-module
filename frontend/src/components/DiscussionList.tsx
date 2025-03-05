@@ -7,7 +7,7 @@ const DiscussionList = () => {
   useEffect(() => {
     const fetchThreads = async () => {
       try {
-        const response = await fetch("http://localhost:8000/forum/threads");
+        const response = await fetch("https://discussion-forum-module.onrender.com/forum/threads/");
         if (response.ok) {
           const data = await response.json();
           setThreads(data);
