@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import DiscussionCreation from "./pages/DiscussionCreation";
 import AppLayout from "./layouts/AppLayout";
 import DiscussionDetails from "./pages/DiscussionDetails";
+import PageNotfound from "./pages/PageNotfound";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/thread/create" element={<DiscussionCreation />} />
           <Route path="/thread/:id" element={<DiscussionDetails />} />
+          <Route path="*" element={<PageNotfound/>}/>
         </Route>
       </Routes>
     </>
