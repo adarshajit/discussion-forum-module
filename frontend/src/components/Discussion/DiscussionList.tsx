@@ -3,6 +3,7 @@ import { Thread } from "../../types";
 import DiscussionApi from "../../api/discussion";
 import DiscussionItem from "./DiscussionItem";
 import Loader from "../Loader";
+import Search from "../Search";
 
 const DiscussionList = () => {
   const [threads, setThreads] = useState<Thread[]>([]);
@@ -35,6 +36,7 @@ const DiscussionList = () => {
 
   return (
     <div className="p-10">
+      <Search />
       <ul className="list bg-base-100 rounded-box shadow-md">
         {threads.map((thread: Thread) => (
           <div className="w-full">
