@@ -5,7 +5,7 @@ services:
   env_file:
    - .env # Default; overridden via --env-file
   ports:
-   - '8000:8000'
+   - '8000:10000'
   depends_on:
    - db
   volumes:

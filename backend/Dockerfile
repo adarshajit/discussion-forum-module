@@ -11,4 +11,4 @@ RUN pip install -r requirements.txt
 
 ENV DJANGO_ENV=local
 
-CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:8000 config.wsgi:application"]
+CMD ["sh", "-c", "python manage.py migrate && gunicorn --bind 0.0.0.0:10000 config.wsgi:application"]
