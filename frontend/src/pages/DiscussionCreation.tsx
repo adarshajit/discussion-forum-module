@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
+import discussionApi from "../api/discussion";
 
 const DiscussionCreation = () => {
   const [title, setTitle] = useState("");
@@ -18,21 +19,9 @@ const DiscussionCreation = () => {
     };
 
     try {
-      const response = await fetch("https://discussion-forum-module.onrender.com/forum/thread/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(threadData),
-      });
-
-      if (response.ok) {
-        console.log("Thread created successfully");
+        await discussionApi.createThread(threadData)
         navigate("/");
-      } else {
-        console.error("Failed to create thread");
-      }
-    } catch (error) {
+      } catch (error) {
       console.error("Error:", error);
     }
   };

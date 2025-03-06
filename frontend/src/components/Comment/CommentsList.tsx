@@ -1,19 +1,48 @@
-import { Comment } from "../../types"
-import CommentItem from "./CommentItem"
+import { useEffect, useState } from 'react';
+import { Comment } from '../../types';
+import CommentItem from './CommentItem';
+import commentApi from '../../api/comment';
+import Loader from '../Loader';
 
-const CommentsList = ({comments}: {comments: Comment[]}) => {
-  return (
-    <>
-      <p className="mt-10 text-lg font-bold">{comments.length} Comments</p>
-      <ul className="list bg-base-100 rounded-box shadow-md">
-      {comments.map((comment: Comment) => (
-          <div className="w-full">
-            <CommentItem key={comment.id} comment={comment} />
-          </div>
-        ))}
-      </ul>
-    </>
-  )
-}
+const CommentsList = ({ threadId }: { threadId: string | undefined }) => {
+	const [comments, setComments] = useState<Comment[]>([]);
+	const [loading, setLoading] = useState<boolean>(true);
+	const [error, setError] = useState<string | null>(null);
 
-export default CommentsList
+	useEffect(() => {
+		const fetchThreadComments = async () => {
+			try {
+				const data = await commentApi.getComments(threadId);
+				setComments(data.comments);
+			} catch (err) {
+				setError(
+					err instanceof Error ? err.message : 'Failed to fetch thread comments'
+				);
+			} finally {
+				setLoading(false);
+			}
+		};
+
+		fetchThreadComments();
+	}, [threadId]);
+
+	if (loading) return <Loader message='Fetching comments...' />;
+
+	return (
+		<>
+			<p className='mt-10 text-2xl font-bold'>{comments.length} Comments</p>
+			{!comments.length && (
+				<p className='mt-10 text-2xl text-gray-500 font-bold'>
+					No comments yet. Share your thoughts!
+				</p>
+			)}
+			<ul className='list w-full bg-base-100 rounded-box shadow-md'>
+				{comments.map((comment: Comment) => (
+					<CommentItem key={comment.id} comment={comment} />
+				))}
+			</ul>
+		</>
+	);
+};
+
+export default CommentsList;

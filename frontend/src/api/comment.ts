@@ -12,4 +12,9 @@ const createComment = async (
 	return response.data;
 };
 
-export default { createComment };
+const getComments = async (threadId: string | undefined) => {
+	const response = await apiClient.get(`/thread/${threadId}/comments`);
+	return response.data;
+};
+
+export default { createComment, getComments };

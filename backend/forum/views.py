@@ -118,3 +118,33 @@ def list_all_discussion_threads(request):
         return JsonResponse(thread_list, safe=False, status=200)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)
+
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def list_all_comments_for_thread(request, thread_id):
+    try:
+        thread = DiscussionThread.objects.get(id=thread_id)
+
+        comments = DiscussionComment.objects.select_related('author__author').filter(discussion=thread)
+
+        comments_data = [{
+            "id": comment.id,
+            "description": comment.description,
+            "author": {
+                "username": comment.author.username,
+                "bio": comment.author.author.bio if hasattr(comment.author, "author") else None,
+                "role": comment.author.author.role if hasattr(comment.author, "author") else None
+            },
+            "created_at": comment.created_at,
+            "updated_at": comment.updated_at
+        } for comment in comments]
+
+        return JsonResponse({
+            "thread_id": thread.id,
+            "comments": comments_data
+        }, status=200)
+
+    except DiscussionThread.DoesNotExist:
+        return JsonResponse({"error": "Discussion thread not found"}, status=404)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=400)

@@ -84,7 +84,7 @@ const DiscussionDetails = () => {
 			</div>
 
       <CreateComments thread={thread}/>
-      <CommentsList comments={thread.comments}/>
+      <CommentsList threadId={id}/>
 		</div>
 	);
 };
