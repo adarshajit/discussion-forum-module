@@ -95,7 +95,7 @@ def get_database_config():
             "NAME": os.getenv("POSTGRES_DB", "mydatabase"),
             "USER": os.getenv("POSTGRES_USER", "myuser"),
             "PASSWORD": os.getenv("POSTGRES_PASSWORD", "mypassword"),
-            "HOST": os.getenv("POSTGRES_HOST", "localhost"),
+            "HOST": os.getenv("POSTGRES_HOST", "postgres_db"),
             "PORT": os.getenv("POSTGRES_PORT", "5432"),
         }
     }
