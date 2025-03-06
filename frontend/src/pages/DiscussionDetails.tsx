@@ -5,6 +5,7 @@ import { ThreadDetails } from '../types';
 import CreateComments from '../components/Comment/CreateComments';
 import CommentsList from '../components/Comment/CommentsList';
 import discussionApi from '../api/discussion';
+import Loader from '../components/Loader';
 
 const DiscussionDetails = () => {
 	const { id } = useParams();
@@ -30,9 +31,8 @@ const DiscussionDetails = () => {
 	}, [id]);
 
 	if (loading)
-		return (
-			<div className='flex justify-center items-center h-screen'>Loading...</div>
-		);
+		return <Loader message='Fetching....'/>
+
 	if (error) return <div className='text-error p-4'>{error}</div>;
 	if (!thread) return <div className='text-error p-4'>Thread not found</div>;
 
