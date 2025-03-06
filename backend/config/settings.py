@@ -24,12 +24,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 load_dotenv()  # Load environment variables from .env file
-SECRET_KEY = os.getenv('SECRET_KEY')
 
+# Get environment variables
+DJANGO_ENV = os.getenv("DJANGO_ENV", "development").lower()
+
+SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['discussion-forum-module.onrender.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
+if DJANGO_ENV == "production":
+    ALLOWED_HOSTS.append("discussion-forum-module.onrender.com")
 
 # Application definition
 
@@ -80,10 +85,22 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-DATABASES = {
-    'default': dj_database_url.config(default=os.getenv("DATABASE_URL"))
-}
+# Database Configuration
+def get_database_config():
+    if DJANGO_ENV == "production":
+        return {"default": dj_database_url.config(default=os.getenv("DATABASE_URL"))}
+    return {
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.getenv("POSTGRES_DB", "mydatabase"),
+            "USER": os.getenv("POSTGRES_USER", "myuser"),
+            "PASSWORD": os.getenv("POSTGRES_PASSWORD", "mypassword"),
+            "HOST": os.getenv("POSTGRES_HOST", "postgres_db"),
+            "PORT": os.getenv("POSTGRES_PORT", "5432"),
+        }
+    }
 
+DATABASES = get_database_config()
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
