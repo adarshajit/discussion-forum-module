@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect } from 'react';
+import { DEFAULT_PROFILE_IMAGE_URL } from '../utils/constants';
 
 const Navbar = () => {
 	const { user, isAuthenticated, logout } = useAuth();
@@ -84,7 +85,7 @@ const Navbar = () => {
 						className='btn btn-ghost btn-circle avatar'
 					>
 						<div className='w-10 rounded-full'>
-							<img alt='Tailwind CSS Navbar component' src={user?.avatar_url} />
+							<img alt='Tailwind CSS Navbar component' src={user?.avatar_url ?? DEFAULT_PROFILE_IMAGE_URL} />
 						</div>
 					</div>
 					<ul

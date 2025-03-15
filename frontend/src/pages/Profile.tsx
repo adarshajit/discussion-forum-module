@@ -4,6 +4,8 @@ import { Thread } from '../types';
 import { useEffect, useState } from 'react';
 import DiscussionApi from '../api/discussion';
 import Loader from '../components/Loader';
+import { truncateString } from '../utils/truncateString';
+import { DEFAULT_PROFILE_IMAGE_URL } from '../utils/constants';
 
 const Profile = () => {
 	const [threads, setThreads] = useState<Thread[]>([]);
@@ -39,7 +41,7 @@ const Profile = () => {
 					<div className='flex items-center gap-4'>
 						<div className='avatar'>
 							<div className='w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2'>
-								<img src={user?.avatar_url} alt={user?.username} />
+								<img src={user?.avatar_url ?? DEFAULT_PROFILE_IMAGE_URL} alt={user?.username} />
 							</div>
 						</div>
 						<div>
@@ -66,7 +68,7 @@ const Profile = () => {
 								<Link to={`/thread/${thread.id}`}>
 									<h4 className='card-title hover:text-primary'>{thread.title}</h4>
 								</Link>
-								<p className='text-base-content/70'>{thread.description}</p>
+								<p className='text-base-content/70'>{truncateString(thread.description, 150)}</p>
 								<div className='card-actions justify-between items-center mt-4'>
 									<div className='badge badge-outline'>{thread.category}</div>
 									<div className='text-sm text-base-content/60'>

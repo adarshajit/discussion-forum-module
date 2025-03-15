@@ -4,10 +4,12 @@ import DiscussionApi from "../../api/discussion";
 import DiscussionItem from "./DiscussionItem";
 import Loader from "../Loader";
 import Search from "../Search";
+import { useAuth } from "../../hooks/useAuth";
 
 const DiscussionList = () => {
   const [threads, setThreads] = useState<Thread[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
+  const {user} = useAuth();
 
   useEffect(() => {
     const fetchThreads = async () => {
@@ -36,6 +38,7 @@ const DiscussionList = () => {
 
   return (
     <div className="p-10">
+      <p className="text-3xl font-bold">Welcome back, {user?.username} ✨</p>
       <Search />
       <ul className="list bg-base-100 rounded-box shadow-md">
         {threads.map((thread: Thread) => (
