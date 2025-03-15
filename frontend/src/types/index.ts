@@ -1,7 +1,10 @@
+import { ReactNode } from 'react';
+
 export interface Author {
 	username: string;
-	bio: string | null;
-	role: string;
+	bio?: string | null;
+	role?: string;
+	avatarUrl: string;
 }
 
 export interface Comment {
@@ -32,4 +35,24 @@ export interface ThreadDetails {
 	created_at: string;
 	updated_at: string;
 	comments: Comment[];
+}
+
+export interface AuthState {
+	user: Author | null;
+	isAuthenticated: boolean;
+}
+
+export type AuthAction =
+	| { type: 'login'; payload: Author }
+	| { type: 'logout' };
+
+export interface AuthContextType {
+	user: AuthState['user'];
+	isAuthenticated: boolean;
+	login: (username: string, password: string) => void;
+	logout: () => void;
+}
+
+export interface AuthProviderProps {
+	children: ReactNode;
 }

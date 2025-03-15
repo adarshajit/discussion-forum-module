@@ -39,8 +39,8 @@ const DiscussionList = () => {
       <Search />
       <ul className="list bg-base-100 rounded-box shadow-md">
         {threads.map((thread: Thread) => (
-          <div className="w-full">
-            <DiscussionItem key={thread.id} thread={thread} />
+          <div className="w-full" key={thread.id}>
+            <DiscussionItem thread={thread} />
           </div>
         ))}
       </ul>
