@@ -15,12 +15,12 @@ const CreateComments = ({thread}: {thread: ThreadDetails}) => {
 
     setIsSubmitting(true);
     try {
-      const response = await commentApi.createComment(id, description, user?.username);
-      console.log(response);
+      await commentApi.createComment(id, description, user?.username);
     } catch (error) {
       console.error('Error posting comment:', error);
     } finally {
       setIsSubmitting(false);
+			setDescription("")
     }
   };
 	return (
@@ -32,6 +32,7 @@ const CreateComments = ({thread}: {thread: ThreadDetails}) => {
 					placeholder={`Type here to reply to ${author.username}`}
 					onChange={(e)=> setDescription(e.target.value)}
 					disabled={isSubmitting}
+					value={description}
 					required
 				></textarea>
 

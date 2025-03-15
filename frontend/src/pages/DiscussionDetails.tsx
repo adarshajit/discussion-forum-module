@@ -53,34 +53,14 @@ const DiscussionDetails = () => {
 				/>
 				<div className='flex flex-col'>
 					<div className='flex flex-col gap-2 font-bold'>
-						<span className='text-xl'>{thread.author.username}</span>
+						<Link to="/profile" className='text-xl'>{thread.author.username}</Link>
 						<span className='text-md text-gray-500'>
 							Posted on {new Date(thread.created_at).toLocaleDateString()}
 						</span>
 					</div>
 
-					<p className='pt-3'>{thread.description}</p>
+					<p className='pt-3 text-xl'>{thread.description}</p>
 
-					<div className='flex gap-3'>
-						<button className='btn btn-square btn-ghost'>
-							{thread.upvotes}
-							<svg
-								className='size-[1.2em]'
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 24 24'
-							>
-								<g
-									strokeLinejoin='round'
-									strokeLinecap='round'
-									strokeWidth='2'
-									fill='none'
-									stroke='currentColor'
-								>
-									<path d='M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z'></path>
-								</g>
-							</svg>
-						</button>
-					</div>
 				</div>
 			</div>
 

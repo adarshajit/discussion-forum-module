@@ -76,7 +76,7 @@ const Navbar = () => {
 						<span className='badge badge-xs badge-primary indicator-item'></span>
 					</div>
 				</button>
-				<p className='font-bold'>{user?.username}</p>
+				<Link to="/profile" className='font-bold hover:text-purple-500'>{user?.username}</Link>
 				<div className='dropdown dropdown-end'>
 					<div
 						tabIndex={0}
