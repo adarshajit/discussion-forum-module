@@ -27,5 +27,32 @@ services:
   volumes:
    - postgres_data:/var/lib/postgresql/data
 
+ rabbitmq:
+  image: rabbitmq:3-management
+  container_name: discussion_forum_rabbitmq
+  restart: always
+  ports:
+   - '5672:5672'
+   - '15672:15672'
+  environment:
+   RABBITMQ_DEFAULT_USER: ${RABBITMQ_DEFAULT_USER}
+   RABBITMQ_DEFAULT_PASS: ${RABBITMQ_DEFAULT_PASS}
+
+ celery:
+  build:
+   context: .
+   dockerfile: Dockerfile
+  container_name: discussion_forum_celery
+  env_file:
+   - .env
+  command: celery -A config worker --loglevel=info
+  environment:
+   CELERY_BROKER_URL: ${CELERY_BROKER_URL}
+  depends_on:
+   - backend
+   - rabbitmq
+  volumes:
+   - .:/app
+
 volumes:
  postgres_data:

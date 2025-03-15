@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'celery',
     'forum',
     'authors'
 ]
@@ -148,3 +149,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
 ]
+
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL'),  # RabbitMQ default URL
