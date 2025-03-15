@@ -48,7 +48,7 @@ const DiscussionDetails = () => {
 			<div className='flex gap-8 pt-10 w-full'>
 				<img
 					className='size-16 rounded-box'
-					src={thread.author.avatarUrl ?? DEFAULT_PROFILE_IMAGE_URL}
+					src={thread.author.avatar_url ?? DEFAULT_PROFILE_IMAGE_URL}
 					alt={thread.author.username}
 				/>
 				<div className='flex flex-col'>

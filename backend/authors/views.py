@@ -46,11 +46,18 @@ def login(request):
         password = data.get("password")
         user = authenticate(request, username=username, password=password)
         if user is not None:
+            author = Author.objects.get(user=user)
             refresh = RefreshToken.for_user(user)
             return JsonResponse({
                 "message": "Login successful!",
                 "refresh": str(refresh),
                 "access": str(refresh.access_token),
+                "user": {
+                    "username": user.username,
+                    "bio": author.bio,
+                    "role": author.role,
+                    "avatar_url": author.avatar_url
+                }
             }, status=200)
         else:
             return JsonResponse({"error": "Invalid credentials"}, status=400)

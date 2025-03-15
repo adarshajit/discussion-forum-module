@@ -59,7 +59,7 @@ def get_author_data(user):
         "username": user.username,
         "bio": user.author.bio if hasattr(user, "author") else None,
         "role": user.author.role if hasattr(user, "author") else None,
-        "avatarUrl": user.author.avatar_url if hasattr(user, "author") else None
+        "avatar_url": user.author.avatar_url if hasattr(user, "author") else None
     }
 
 @api_view(['GET'])

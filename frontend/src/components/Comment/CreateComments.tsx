@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { ThreadDetails } from "../../types";
 import commentApi from "../../api/comment";
+import { useAuth } from "../../hooks/useAuth";
 
 const CreateComments = ({thread}: {thread: ThreadDetails}) => {
 	const [description, setDescription] = useState<string>('');
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
-
+	const {user} = useAuth();
 	const {id, author } = thread;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -14,7 +15,7 @@ const CreateComments = ({thread}: {thread: ThreadDetails}) => {
 
     setIsSubmitting(true);
     try {
-      const response = await commentApi.createComment(id, description);
+      const response = await commentApi.createComment(id, description, user?.username);
       console.log(response);
     } catch (error) {
       console.error('Error posting comment:', error);

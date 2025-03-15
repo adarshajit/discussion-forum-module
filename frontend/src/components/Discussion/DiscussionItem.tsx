@@ -8,7 +8,7 @@ const DiscussionItem = ({thread}: {thread: Thread}) => {
     <> 
     <li className="flex flex-col p-6 max-w-3xl min-w-3xl gap-4">
       <div className="flex py-4 items-center">
-        <img className="size-16 rounded-box" src={thread.author.avatarUrl ?? DEFAULT_PROFILE_IMAGE_URL}/>
+        <img className="size-16 rounded-box" src={thread.author.avatar_url ?? DEFAULT_PROFILE_IMAGE_URL}/>
         <div className="flex flex-col px-3 gap-1">
           <p className="text-lg font-semibold">{thread.author.username}</p>
           <p className="text-sm uppercase font-semibold opacity-60">{thread.author.role}</p>

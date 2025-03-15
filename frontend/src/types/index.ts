@@ -4,7 +4,7 @@ export interface Author {
 	username: string;
 	bio?: string | null;
 	role?: string;
-	avatarUrl: string;
+	avatar_url: string;
 }
 
 export interface Comment {

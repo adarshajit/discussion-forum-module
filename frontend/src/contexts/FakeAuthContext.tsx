@@ -1,60 +1,65 @@
 import { useEffect, useReducer } from 'react';
 import { AuthAction, AuthProviderProps, AuthState } from '../types';
 import { AuthContext } from '../hooks/useAuth';
+import * as authApi from '../api/authentication';
 
 const initialState: AuthState = {
-	user: null,
-	isAuthenticated: false,
+  user: null,
+  isAuthenticated: false,
 };
 
 const reducer = (state: AuthState, action: AuthAction) => {
-	switch (action.type) {
-		case 'login':
-			return { ...state, user: action.payload, isAuthenticated: true };
-		case 'logout':
-			return { ...state, user: null, isAuthenticated: false };
-		default:
-			throw new Error('Unknown action');
-	}
-};
-
-const FAKE_USER = {
-	username: 'Oliver Smith',
-	bio: 'I love to code and occassionaly sip coffee! ☕️',
-	password: 'test123',
-  avatarUrl: 'https://api.dicebear.com/5.x/open-peeps/svg?head=twists&face=cute&facialHairProbability=100&facialHair=full3&accessoriesProbability=100&accessories=glasses3&skinColor=edb98a&clothingColor=e279c7&'
+  switch (action.type) {
+    case 'login':
+      return { ...state, user: action.payload, isAuthenticated: true };
+    case 'logout':
+      return { ...state, user: null, isAuthenticated: false };
+    default:
+      throw new Error('Unknown action');
+  }
 };
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-	const [{ user, isAuthenticated }, dispatch] = useReducer(
-		reducer,
-		initialState
-	);
+  const [{ user, isAuthenticated }, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
-    if (storedUser) {
+    const token = localStorage.getItem('token');
+    if (storedUser && token) {
       dispatch({ type: 'login', payload: JSON.parse(storedUser) });
     }
   }, []);
 
-	const login = (username: string, password: string) => {
-		if (username === FAKE_USER.username && password === FAKE_USER.password) {
-      localStorage.setItem('user', JSON.stringify(FAKE_USER));
-			dispatch({ type: 'login', payload: FAKE_USER });
-		}
-	};
+  const login = async (username: string, password: string) => {
+    try {
+      const response = await authApi.login(username, password);
+			console.log(response)
+      
+      localStorage.setItem('token', response.access);
+      localStorage.setItem('user', JSON.stringify(response.user));
+      
+      dispatch({ type: 'login', payload: response.user });
+      return true;
+    } catch (error) {
+      console.error('Login failed:', error);
+      return false;
+    }
+  };
 
-	const logout = () => {
-    localStorage.removeItem('user');
-		dispatch({ type: 'logout' });
-	};
+  const logout = async () => {
+    try {
+      await authApi.logout();
+      dispatch({ type: 'logout' });
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
-	return (
-		<AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
-			{children}
-		</AuthContext.Provider>
-	);
+  return (
+    <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export { AuthProvider };

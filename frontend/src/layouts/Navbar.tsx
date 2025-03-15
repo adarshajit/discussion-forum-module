@@ -6,6 +6,8 @@ const Navbar = () => {
 	const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
+	console.log(user)
+
   useEffect(()=>{
     if(!isAuthenticated) navigate("/login")
   }, [isAuthenticated, navigate])
@@ -82,7 +84,7 @@ const Navbar = () => {
 						className='btn btn-ghost btn-circle avatar'
 					>
 						<div className='w-10 rounded-full'>
-							<img alt='Tailwind CSS Navbar component' src={user?.avatarUrl} />
+							<img alt='Tailwind CSS Navbar component' src={user?.avatar_url} />
 						</div>
 					</div>
 					<ul
