@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import discussionApi from "../api/discussion";
+import { useAuth } from "../hooks/useAuth";
 
 const DiscussionCreation = () => {
   const [title, setTitle] = useState("");
@@ -8,6 +9,7 @@ const DiscussionCreation = () => {
   const [description, setDescription] = useState("");
 
   const navigate = useNavigate();
+  const {user} = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -16,6 +18,7 @@ const DiscussionCreation = () => {
       title,
       category,
       description,
+      username: user?.username
     };
 
     try {

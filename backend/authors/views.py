@@ -18,12 +18,13 @@ def register(request):
         password = data.get("password")
         bio = data.get("bio", "")
         role = data.get("role", AuthorRoleEnum.GUEST.value)
+        avatar_url = data.get("avatar_url", "")
         if not username or not password:
             return JsonResponse({"error": "Username and password are required"}, status=400)
         if User.objects.filter(username=username).exists():
             return JsonResponse({"error": "Username already exists"}, status=400)
         user = User.objects.create_user(username=username, password=password)
-        author = Author.objects.create(user=user, bio=bio, role=role)
+        author = Author.objects.create(user=user, bio=bio, role=role, avatar_url=avatar_url)
         refresh = RefreshToken.for_user(user)
         return JsonResponse({
             "message": "User registered successfully!",
@@ -53,5 +54,37 @@ def login(request):
             }, status=200)
         else:
             return JsonResponse({"error": "Invalid credentials"}, status=400)
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=400)
+
+@api_view(['PUT'])
+@permission_classes([AllowAny])
+@csrf_exempt
+def edit_author(request, author_id):
+    try:
+        data = json.loads(request.body)
+        author = Author.objects.select_related('user').get(id=author_id)
+
+        # Update author fields if provided
+        if 'bio' in data:
+            author.bio = data['bio']
+        if 'role' in data:
+            author.role = data['role']
+        if 'avatar_url' in data:
+            author.avatar_url = data['avatar_url']
+            
+        author.save()
+
+        return JsonResponse({
+            "message": "Author updated successfully!",
+            "author": {
+                "username": author.user.username,
+                "bio": author.bio,
+                "role": author.role,
+                "avatar_url": author.avatar_url
+            }
+        }, status=200)
+    except Author.DoesNotExist:
+        return JsonResponse({"error": "Author not found"}, status=404)
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=400)

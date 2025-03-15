@@ -4,7 +4,7 @@ import { useAuth } from '../hooks/useAuth';
 import { useNavigate } from 'react-router';
 
 const Login = () => {
-    const [username, setUsername] = useState('john_doe');
+    const [username, setUsername] = useState('Oliver Smith');
     const [password, setPassword] = useState('test123');
 
     const { login, isAuthenticated } = useAuth();

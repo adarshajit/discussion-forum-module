@@ -6,6 +6,7 @@ import CreateComments from '../components/Comment/CreateComments';
 import CommentsList from '../components/Comment/CommentsList';
 import discussionApi from '../api/discussion';
 import Loader from '../components/Loader';
+import { DEFAULT_PROFILE_IMAGE_URL } from '../utils/constants';
 
 const DiscussionDetails = () => {
 	const { id } = useParams();
@@ -47,7 +48,7 @@ const DiscussionDetails = () => {
 			<div className='flex gap-8 pt-10 w-full'>
 				<img
 					className='size-16 rounded-box'
-					src='https://img.daisyui.com/images/profile/demo/1@94.webp'
+					src={thread.author.avatarUrl ?? DEFAULT_PROFILE_IMAGE_URL}
 					alt={thread.author.username}
 				/>
 				<div className='flex flex-col'>

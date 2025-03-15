@@ -10,7 +10,6 @@ const initialState: AuthState = {
 const reducer = (state: AuthState, action: AuthAction) => {
 	switch (action.type) {
 		case 'login':
-      console.log(action.payload)
 			return { ...state, user: action.payload, isAuthenticated: true };
 		case 'logout':
 			return { ...state, user: null, isAuthenticated: false };
@@ -20,10 +19,10 @@ const reducer = (state: AuthState, action: AuthAction) => {
 };
 
 const FAKE_USER = {
-	username: 'john_doe',
+	username: 'Oliver Smith',
 	bio: 'I love to code and occassionaly sip coffee! ☕️',
 	password: 'test123',
-  avatarUrl: 'https://api.dicebear.com/5.x/open-peeps/svg?head=hatHip&face=smile&accessoriesProbability=100&accessories=glasses&skinColor=edb98a&clothingColor=fdea6b&backgroundColor=c0aede&'
+  avatarUrl: 'https://api.dicebear.com/5.x/open-peeps/svg?head=twists&face=cute&facialHairProbability=100&facialHair=full3&accessoriesProbability=100&accessories=glasses3&skinColor=edb98a&clothingColor=e279c7&'
 };
 
 const AuthProvider = ({ children }: AuthProviderProps) => {

@@ -15,3 +15,4 @@ class Author(models.Model):
         choices=[(role.name, role.value) for role in AuthorRoleEnum],
         default=AuthorRoleEnum.GUEST.value
     )
+    avatar_url = models.TextField(blank=True, null=True)
