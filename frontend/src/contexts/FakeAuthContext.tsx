@@ -33,7 +33,6 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
   const login = async (username: string, password: string) => {
     try {
       const response = await authApi.login(username, password);
-			console.log(response)
       
       localStorage.setItem('token', response.access);
       localStorage.setItem('user', JSON.stringify(response.user));
