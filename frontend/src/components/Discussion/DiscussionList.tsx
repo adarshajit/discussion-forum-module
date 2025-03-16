@@ -46,7 +46,7 @@ const DiscussionList = () => {
 			<p className='text-3xl font-bold'>Welcome back, {user?.username} ✨</p>
 			<Search threads={threads} onSearch={handleSearch} />
 			{filteredThreads.length === 0 && (
-				<p className='text-2xl font-bold text-gray-400 mt-10 text-center'>The thread you're looking for does not exist! 👀</p>
+				<p className='text-2xl font-bold text-gray-400 mt-10 text-center h-screen'>The thread you're looking for does not exist! 👀</p>
 			)}
 			<ul className='list bg-base-100 rounded-box shadow-md'>
 				{filteredThreads.map((thread: Thread) => (
