@@ -36,7 +36,7 @@ const Navbar = () => {
 			</div>
 			<div className='navbar-center'>
 				<Link to='/' className='btn btn-ghost text-xl'>
-					URMS Discussions
+					Research Discussion Forum
 				</Link>
 			</div>
 			<div className='navbar-end gap-2'>
