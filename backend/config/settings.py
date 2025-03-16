@@ -47,7 +47,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'celery',
     'forum',
-    'authors'
+    'authors',
+    'notifications',
 ]
 
 MIDDLEWARE = [
