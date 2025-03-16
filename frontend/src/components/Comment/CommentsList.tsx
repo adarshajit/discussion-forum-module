@@ -24,7 +24,7 @@ const CommentsList = ({ threadId }: { threadId: string | undefined }) => {
 		};
 
 		fetchThreadComments();
-	}, [threadId, comments]);
+	}, [threadId]);
 
 	if (loading) return <Loader message='Fetching comments...' />;
 
