@@ -66,7 +66,7 @@ const Navbar = () => {
             </div>
           </button>
           <div tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-72">
-            <div className="p-2 border-b">
+            <div className="p-2 border-b flex justify-between items-center">
               <h3 className="font-bold text-md">Notifications</h3>
             </div>
             {notifications.length === 0 ? (
@@ -77,7 +77,7 @@ const Navbar = () => {
               <ul className="menu">
                 {notifications.map(notification => (
                   <li key={notification.id}>
-                    <a className={`${!notification.isRead ? 'font-semibold text-purple-900' : ''}`}>
+                    <a className="text-base-content">
                       {notification.message}
                     </a>
                   </li>
@@ -85,14 +85,14 @@ const Navbar = () => {
               </ul>
             )}
             <div className="p-2 border-t text-center">
-              <button 
-                className="btn btn-ghost btn-xs"
-                onClick={() => setNotifications(prev => 
-                  prev.map(n => ({ ...n, isRead: true }))
-                )}
-              >
-                Mark all as read
-              </button>
+						{notifications.length > 0 && (
+                <button 
+                  className="btn btn-ghost btn-xs"
+                  onClick={() => setNotifications([])}
+                >
+                  Clear all
+                </button>
+              )}
             </div>
           </div>
         </div>
