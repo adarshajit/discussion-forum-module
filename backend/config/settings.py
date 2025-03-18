@@ -149,7 +149,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://adarshajit.github.io/"
+    "https://adarshajit.github.io/",
+    "https://discussion-forum-module.vercel.app/"
 ]
+
 
 CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL')  # RabbitMQ default URL
