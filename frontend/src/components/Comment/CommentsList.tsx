@@ -7,7 +7,6 @@ import Loader from '../Loader';
 const CommentsList = ({ threadId }: { threadId: string | undefined }) => {
 	const [comments, setComments] = useState<Comment[]>([]);
 	const [loading, setLoading] = useState<boolean>(true);
-	const [error, setError] = useState<string | null>(null);
 
 	useEffect(() => {
 		const fetchThreadComments = async () => {
@@ -15,16 +14,14 @@ const CommentsList = ({ threadId }: { threadId: string | undefined }) => {
 				const data = await commentApi.getComments(threadId);
 				setComments(data.comments);
 			} catch (err) {
-				setError(
-					err instanceof Error ? err.message : 'Failed to fetch thread comments'
-				);
+				throw new Error("Failed to fetch thread comments!" + err)
 			} finally {
 				setLoading(false);
 			}
 		};
 
 		fetchThreadComments();
-	}, [threadId, comments]);
+	}, [threadId]);
 
 	if (loading) return <Loader message='Fetching comments...' />;
 

@@ -1,11 +1,9 @@
 import DiscussionList from "../components/Discussion/DiscussionList"
-import Sidebar from "../layouts/Sidebar"
 
 const Home = () => {
   return (
     <>
-      <div className="flex">
-        <Sidebar/>
+      <div className="flex justify-center items-center">
         <DiscussionList/>
       </div>
     </>
