@@ -1,12 +1,12 @@
 import json
 from django.http import JsonResponse
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import AllowAny
 from .models import DiscussionThread, DiscussionComment
 from django.contrib.auth.models import User
+from .tasks import handle_comment_creation, handle_thread_creation
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
 def create_discussion_thread(request):
     try:
         data = json.loads(request.body)
@@ -23,6 +23,7 @@ def create_discussion_thread(request):
             category=category,
             author=author
         )
+        handle_thread_creation(thread.title)
         return JsonResponse({
             "message": "Discussion thread created successfully!",
             "thread_id": thread.id
@@ -31,7 +32,6 @@ def create_discussion_thread(request):
         return JsonResponse({"error": str(e)}, status=400)
 
 @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
 def create_discussion_comment(request, thread_id):
     try:
         data = json.loads(request.body)
@@ -46,6 +46,7 @@ def create_discussion_comment(request, thread_id):
             author=author,
             discussion=discussion
         )
+        handle_comment_creation(comment.author.username)
         return JsonResponse({
             "message": "Comment added successfully!",
             "comment_id": comment.id
