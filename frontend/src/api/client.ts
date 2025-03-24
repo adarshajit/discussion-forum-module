@@ -1,8 +1,8 @@
 import axios from 'axios';
 
 export const apiClient = axios.create({
-	// baseURL: 'http://localhost:8000',
-	baseURL: 'https://discussion-forum-module.onrender.com',
+	baseURL: 'http://localhost:8000',
+	// baseURL: 'https://discussion-forum-module.onrender.com',
 	headers: {
 		'Content-Type': 'application/json',
 	},

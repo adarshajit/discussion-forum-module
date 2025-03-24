@@ -23,7 +23,7 @@ def create_discussion_thread(request):
             category=category,
             author=author
         )
-        handle_thread_creation.delay(thread.title)
+        handle_thread_creation(thread.title)
         return JsonResponse({
             "message": "Discussion thread created successfully!",
             "thread_id": thread.id
@@ -46,7 +46,7 @@ def create_discussion_comment(request, thread_id):
             author=author,
             discussion=discussion
         )
-        handle_comment_creation.delay(comment.author.username)
+        handle_comment_creation(comment.author.username)
         return JsonResponse({
             "message": "Comment added successfully!",
             "comment_id": comment.id

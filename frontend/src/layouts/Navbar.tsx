@@ -1,16 +1,32 @@
 import { Link, useNavigate } from 'react-router';
 import { useAuth } from '../hooks/useAuth';
 import { useEffect, useState } from 'react';
-import { DEFAULT_PROFILE_IMAGE_URL, NOTIFICATIONS } from '../utils/constants';
+import { DEFAULT_PROFILE_IMAGE_URL } from '../utils/constants';
+import notificationApi from '../api/notifications';
+import { Notification } from '../types';
 
 const Navbar = () => {
 	const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
-  const [notifications, setNotifications] = useState(NOTIFICATIONS);
+  const [notifications, setNotifications] = useState<Notification[]>([]);
 
   useEffect(()=>{
     if(!isAuthenticated) navigate("/login")
   }, [isAuthenticated, navigate])
+
+
+	useEffect(() => {
+			const fetchNotifications = async () => {
+				try {
+					const data = await notificationApi.getNotifications()
+					setNotifications(data.notifications);
+				} catch (err) {
+					throw new Error("Failed to fetch thread comments!" + err)
+				}
+			};
+	
+			fetchNotifications();
+		}, []);
 
 	return (
 		<div className='navbar bg-base-100 shadow-sm'>
@@ -60,9 +76,9 @@ const Navbar = () => {
                   d='M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9'
                 />
               </svg>
-              {notifications.some(n => !n.isRead) && (
-                <span className='badge badge-xs badge-primary indicator-item'></span>
-              )}
+              
+              <span className='badge badge-xs badge-primary indicator-item'></span>
+            
             </div>
           </button>
           <div tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-72">
@@ -75,10 +91,10 @@ const Navbar = () => {
               </div>
             ) : (
               <ul className="menu">
-                {notifications.map(notification => (
+                {notifications.map((notification: Notification) => (
                   <li key={notification.id}>
                     <a className="text-base-content">
-                      {notification.message}
+                      {notification.description}
                     </a>
                   </li>
                 ))}
