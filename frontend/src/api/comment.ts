@@ -19,7 +19,7 @@ const createComment = async (
 
 const getComments = async (threadId: string | undefined) => {
 	const response = await apiClient.get(`/forum/thread/${threadId}/comments`);
-	return response.data;
+	return response.data.comments;
 };
 
 export default { createComment, getComments };

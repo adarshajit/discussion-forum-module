@@ -19,7 +19,7 @@ const Navbar = () => {
 			const fetchNotifications = async () => {
 				try {
 					const data = await notificationApi.getNotifications()
-					setNotifications(data.notifications);
+					setNotifications(data);
 				} catch (err) {
 					throw new Error("Failed to fetch thread comments!" + err)
 				}
