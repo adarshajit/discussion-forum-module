@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import discussionApi from "../api/discussion";
 import { useAuth } from "../hooks/useAuth";
+import { useQueryClient } from "@tanstack/react-query";
 
 const DiscussionCreation = () => {
   const [title, setTitle] = useState("");
@@ -10,6 +11,8 @@ const DiscussionCreation = () => {
 
   const navigate = useNavigate();
   const {user} = useAuth()
+  const queryClient = useQueryClient();
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +25,8 @@ const DiscussionCreation = () => {
     };
 
     try {
-        await discussionApi.createThread(threadData)
+        await discussionApi.createThread(threadData);
+        await queryClient.invalidateQueries({ queryKey: ["discussions"]});
         navigate("/");
       } catch (error) {
       console.error("Error:", error);
