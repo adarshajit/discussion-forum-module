@@ -42,11 +42,9 @@ const DiscussionList = () => {
 					The thread you're looking for does not exist! 👀
 				</p>
 			)}
-			<ul className='list bg-base-100 rounded-box shadow-md'>
+			<ul className='list bg-base-100 rounded-box shadow-md w-full'>
 				{filteredThreads.map((thread) => (
-					<div className='w-full' key={thread.id}>
-						<DiscussionItem thread={thread} />
-					</div>
+					<DiscussionItem thread={thread} key={thread.id}/>
 				))}
 			</ul>
 		</div>

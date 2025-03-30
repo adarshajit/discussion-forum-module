@@ -5,10 +5,9 @@ import { DEFAULT_PROFILE_IMAGE_URL } from "../../utils/constants"
 
 const DiscussionItem = ({thread}: {thread: Thread}) => {
   return (
-    <> 
-    <li className="flex flex-col p-6 max-w-3xl min-w-3xl gap-4">
+    <li className="flex flex-col px-6 pt-5 max-w-3xl min-w-3xl gap-4">
       <div className="flex py-4 items-center">
-        <img className="size-16 rounded-box" src={thread.author.avatar_url ?? DEFAULT_PROFILE_IMAGE_URL}/>
+        <img className="size-16 rounded-box" src={thread.author.avatar_url ?? DEFAULT_PROFILE_IMAGE_URL} alt="avatar_image"/>
         <div className="flex flex-col px-3 gap-1">
           <p className="text-lg font-semibold">{thread.author.username}</p>
           <p className="text-sm uppercase font-semibold opacity-60">{thread.author.role}</p>
@@ -20,11 +19,10 @@ const DiscussionItem = ({thread}: {thread: Thread}) => {
         {truncateString(thread.description, 150)}
       </p>
       <div className="flex justify-end gap-3 pt-6">
-        <Link className="btn btn-ghost text-lg" to={`/thread/${thread.id}`}>Read more</Link>
+        <Link className="btn btn-ghost text-lg" to={`/thread/${thread.id}`}>View Thread</Link>
       </div>
+      <hr className="border border-gray-200"/>
     </li>
-    <hr className="border border-gray-200"/>
-  </>
   )
 }
 

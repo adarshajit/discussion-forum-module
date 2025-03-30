@@ -32,7 +32,7 @@ const Navbar = () => {
 		<div className='navbar bg-base-100 shadow-sm'>
 			<div className='navbar-start'>
 				<div className='dropdown'>
-					<div tabIndex={0} role='button' className='btn btn-ghost btn-circle'>
+					<div tabIndex={0} role='button' className='btn btn-ghost btn-circle' aria-label="dropdown_menu">
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							className='h-5 w-5'
@@ -60,7 +60,7 @@ const Navbar = () => {
 					<button className='btn btn-neutral'>Create Thread +</button>
 				</Link>
 				<div className="dropdown dropdown-end">
-          <button tabIndex={0} className='btn btn-ghost btn-circle'>
+          <button tabIndex={0} className='btn btn-ghost btn-circle' id="notification_bell" aria-label="notification bell">
             <div className='indicator'>
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -93,9 +93,9 @@ const Navbar = () => {
               <ul className="menu">
                 {notifications.map((notification: Notification) => (
                   <li key={notification.id}>
-                    <a className="text-base-content">
+                    <p className="text-base-content">
                       {notification.description}
-                    </a>
+                    </p>
                   </li>
                 ))}
               </ul>
@@ -133,7 +133,7 @@ const Navbar = () => {
 							</Link>
 						</li>
 						<li>
-							<a onClick={logout}>Logout</a>
+							<button onClick={logout}>Logout</button>
 						</li>
 					</ul>
 				</div>
