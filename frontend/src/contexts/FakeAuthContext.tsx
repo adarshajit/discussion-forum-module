@@ -1,7 +1,8 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import { AuthAction, AuthProviderProps, AuthState } from '../types';
 import { AuthContext } from '../hooks/useAuth';
 import * as authApi from '../api/authentication';
+import Loader from '../components/Loader';
 
 const initialState: AuthState = {
   user: null,
@@ -21,6 +22,7 @@ const reducer = (state: AuthState, action: AuthAction) => {
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
   const [{ user, isAuthenticated }, dispatch] = useReducer(reducer, initialState);
+  const [loading, setLoading] = useState(true); // Add loading state
 
   useEffect(() => {
     const storedUser = localStorage.getItem('user');
@@ -28,6 +30,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     if (storedUser && token) {
       dispatch({ type: 'login', payload: JSON.parse(storedUser) });
     }
+    setLoading(false); // Set loading to false after initialization
   }, []);
 
   const login = async (username: string, password: string) => {
@@ -53,6 +56,10 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
       console.error('Logout failed:', error);
     }
   };
+
+  if (loading) {
+    return <Loader message='Loading...'/>
+  }
 
   return (
     <AuthContext.Provider value={{ user, isAuthenticated, login, logout }}>
